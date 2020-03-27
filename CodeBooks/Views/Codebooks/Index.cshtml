@@ -1,0 +1,106 @@
+﻿@model IEnumerable<CodeBooks.Models.Codebooks>
+
+@{
+    ViewData["Title"] = "Spisak šifrarnika";
+}
+
+<h1>Spisak šifrarnika</h1>
+<p>
+    <input type="button" class="add-button" value="DODAJ NOVI" onclick="location.href='@Url.Action("Create", "Codebooks")'" />
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Šifra
+            </th>
+            <th>
+                Naziv
+            </th>
+            <th>
+                Opis
+            </th>
+            <th>
+                Programerski
+            </th>
+            <th>
+                Kreiran
+            </th>
+            <th>Akcije</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Programmer)
+                </td>
+                <td>
+                    @if (item.CreatedOn != null)
+                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.CreatedOn))
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Uredi</a> |
+                    <a asp-controller="Codes" asp-action="Index" asp-route-CodebookId="@item.Id">Šifre</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Obriši</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!--Modal: modalConfirmDelete-->
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <input id="baseDeleteUrl" type="hidden" value="@Url.Action("Delete", "Codebooks")" />
+                <p class="heading">Are you sure?</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+
+                <i class="fas fa-times fa-4x animated rotateIn"></i>
+
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer flex-center">
+                <a href="" id="deleteItemBtn" class="btn  btn-outline-danger">Yes</a>
+                <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<!--Modal: modalConfirmDelete-->
+<script>
+    var showDeleteModal = function (itemId) {
+        // Show modal window.
+        $("#modalConfirmDelete").modal("show");
+
+        // Get base url for delete
+        var baseDeleteUrl = $("#baseDeleteUrl").val();
+
+        // Create full url for delete.
+        var fullDeleteUrl = baseDeleteUrl + "/" + itemId;
+
+        // Set deletion url to anchor tag.
+        $("#deleteItemBtn").attr("href", fullDeleteUrl);
+    }
+
+</script>

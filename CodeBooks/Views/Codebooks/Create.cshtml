@@ -1,0 +1,62 @@
+﻿@model CodeBooks.Models.CodebooksViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Kreiranje</h1>
+
+<h4>Šifrarnika</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Code" class="control-label"></label>
+                    <input asp-for="Code" class="form-control" />
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-row" style="margin-left:20px">
+                <div class="form-group form-check col-md-6">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Programmer" /> @Html.DisplayNameFor(model => model.Programmer)
+                    </label>
+                </div>
+                <div class="form-group form-check col-md-6">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Cash" /> @Html.DisplayNameFor(model => model.Cash)
+                    </label>
+                </div>
+            </div>
+                <div class="form-group col-md-6" style="padding: 0">
+                    <label asp-for="CodebookId" class="control-label"></label>
+                    @Html.DropDownListFor(model=>model.CodebookId,new SelectList(Model.codebooks,"Id","Title")," - ",new { @class = "form-control" })
+                    <span asp-validation-for="CodebookId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="button" class="delete-button" value="ODUSTANI" onclick="location.href='@Url.Action("Index", "Codebooks")'" />
+                    <input type="submit" value="SNIMI ŠIFRARNIK" class="add-button" />
+                </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

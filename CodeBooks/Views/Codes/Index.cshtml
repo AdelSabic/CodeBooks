@@ -1,0 +1,70 @@
+﻿@model CodeBooks.Models.Codes.CodesViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<h2>Nadređeni: @Model.Superior</h2>
+@*@Html.HiddenFor(model => model.CodebookId)
+@Html.HiddenFor(model => model.CodeId)*@
+<p>
+    <a asp-action="Create" asp-route-CodeId="@Model.CodeId" asp-route-CodebookId="@Model.CodebookId">Dodaj novu šifru</a>
+    @if (Model.CodeId == null)
+    {
+        <input type="button" class="delete-button" value="NAZAD" onclick="location.href='@Url.Action("Index", "Codebooks")'" />
+    }
+    else
+    {
+        <input type="button" class="delete-button" value="NAZAD" onclick="location.href='@Url.Action("Index", "Codes", new { CodeId = Model.scid, CodebookId = Model.scbid })'" />
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Oznaka šifre
+            </th>
+            <th>
+                Naziv šifre
+            </th>
+            <th>
+                Preduzeće
+            </th>
+            <th>
+                Redni broj
+            </th>
+            <th>
+                Kreirana
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Rows) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ordinal)
+            </td>
+            <td>
+                @if (item.CreatedOn != null)
+                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.CreatedOn))
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Codes" asp-action="Index" asp-route-CodeId="@item.Id">Šifre</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

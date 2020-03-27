@@ -1,0 +1,74 @@
+﻿@model CodeBooks.Models.Codes.Codes
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Codes</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            @Html.HiddenFor(model => model.CodeId)
+            @Html.HiddenFor(model => model.CodebookId)
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="control-label">Oznaka šifre *</label>
+                    <input asp-for="Code" class="form-control" />
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Naziv šifre *</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="control-label">Preduzeće</label>
+                    <input asp-for="Company" class="form-control" />
+                    <span asp-validation-for="Company" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Integer" class="control-label">Cjelobrojna vrijednost</label>
+                    <input asp-for="Integer" class="form-control" />
+                    <span asp-validation-for="Integer" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="String" class="control-label">Tekstualna vrijednost</label>
+                    <input asp-for="String" class="form-control" />
+                    <span asp-validation-for="String" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Decimal" class="control-label">Decimalna vrijednost</label>
+                    <input asp-for="Decimal" class="form-control" />
+                    <span asp-validation-for="Decimal" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Ordinal" class="control-label">Redni broj</label>
+                    <input asp-for="Ordinal" class="form-control" />
+                    <span asp-validation-for="Ordinal" class="text-danger"></span>
+                </div>
+                @*<div class="form-group col-md-6">
+                    <label asp-for="CodeId" class="control-label">Nadređena šifra</label>
+                    <select asp-for="CodeId" class="form-control" asp-items="ViewBag.CodeId"></select>
+                </div>*@
+            </div>
+            <div class="form-group">
+                <input type="button" class="delete-button" value="ODUSTANI" onclick="location.href='@Url.Action("Index", "Codes", new { CodeId = Model.CodeId, CodebookId = Model.CodebookId })'" />
+                <input type="submit" value="SNIMI ŠIFRARNIK" class="add-button" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
